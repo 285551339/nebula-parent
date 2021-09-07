@@ -1,0 +1,89 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        group: XY_A_GROUP
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        group: XY_A_GROUP
+      #    sentinel:
+      #      eager: true
+      #      transport:
+      #        dashboard: localhost:8080
+      #        port: 8719
+      ## 开发环境，一台机器多个节点，利用pid区分集群不同节点
+  #      log:
+  #        switch-pid: true
+  #      datasource:
+  #        ds1:
+  #        nacos:
+  #        server-addr: 127.0.0.1:8848
+  #        dataId: ${spring.application.name}-sentinel.json
+  #        groupId: SENTINEL_GROUP
+  #        data-type: json
+  #        rule-type: flow
+  redis:
+    host: 10.0.8.17
+    port: 6379
+    password: sdxnetcafe
+    database: 0
+    timeout: 3000
+    cache:
+      expiration: 3600
+      expries: '{"application":1800, "test1":0, "test2":1800}'
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-wait: -1ms
+        max-active: 8
+
+#====================================Dubbo config===============================================
+dubbo:
+  scan:
+    base-packages: com.xy.nebulaol.uaa
+  application:
+    name: ${spring.application.name}
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: 21030
+  registry:
+    id: ${spring.application.name}
+    address: spring-cloud://localhost
+  #  config-center:
+  #    address: nacos://localhost:8848
+  #  metadata-report:
+  #    address: nacos://localhost:8848
+  cloud:
+    subscribed-services: nebulaol-user
+  consumer:
+    check: false
+    timeout: 60000
+    retries: 0
+
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 3000
+  MaxAutoRetries: 0 #同一台实例最大重试次数,不包括首次调用
+  MaxAutoRetriesNextServer: 0 #重试负载均衡其他的实例最大重试次数,不包括首次调用
+  OkToRetryOnAllOperations: false  #是否所有操作都重试
+
+logging:
+  level:
+    root: INFO
+  logback:
+    path: ./logs
+    name: ${spring.application.name}
+
+operation:
+  log:
+    switch: true
+
+jwt:
+  user:
+    secret: nt1UST52^%9^(WE23
+
+

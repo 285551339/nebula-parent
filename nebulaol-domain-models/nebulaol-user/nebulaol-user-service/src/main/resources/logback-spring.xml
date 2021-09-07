@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<springProperty scope="context" name="LOG_DIR" source="logging.logback.path"/>
+	<springProperty scope="context" name="LOG_NAME" source="logging.logback.name"/>
+	<property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{64}:%L [%X{traceId}] %msg%n"/>
+	<property name="MAX_HISTORY" value="30"/>
+
+	<!-- 控制台输出 -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>${PATTERN}</Pattern>
+		</layout>
+	</appender>
+	<!-- AllLog -->
+	<appender name="all" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${LOG_DIR}/${LOG_NAME}_all.log</File>
+		<layout>
+			<Pattern>${PATTERN}</Pattern>
+		</layout>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_DIR}/%d{yyyyMMdd}/${LOG_NAME}_all.log.gz</fileNamePattern>
+			<maxHistory>${MAX_HISTORY}</maxHistory>
+		</rollingPolicy>
+	</appender>
+	<!-- 数据库日志 -->
+	<appender name="db" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${LOG_DIR}/${LOG_NAME}_db.log</File>
+		<layout>
+			<Pattern>${PATTERN}</Pattern>
+		</layout>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_DIR}/%d{yyyyMMdd}/${LOG_NAME}_db.log.gz</fileNamePattern>
+			<maxHistory>${MAX_HISTORY}</maxHistory>
+		</rollingPolicy>
+	</appender>
+	<!-- 异常日志 -->
+	<appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<File>${LOG_DIR}/${LOG_NAME}_error.log</File>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>${PATTERN}</Pattern>
+		</layout>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_DIR}/%d{yyyyMMdd}/${LOG_NAME}_error.log.gz</fileNamePattern>
+			<maxHistory>${MAX_HISTORY}</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<!-- 数据库日志 -->
+	<logger name="com.xy.sdx.uaa.mapper" level="debug" addtivity="false">
+		<appender-ref ref="db"/>
+	</logger>
+	<logger name="org.apache.ibatis" level="debug" addtivity="false">
+		<appender-ref ref="db"/>
+	</logger>
+	<logger name="org.mybatis.spring" level="debug" addtivity="false">
+		<appender-ref ref="db"/>
+	</logger>
+    <logger name="com.baomidou.mybatisplus" level="debug" addtivity="false">
+        <appender-ref ref="db"/>
+    </logger>
+
+    <springProfile name="dev">
+        <root level="debug">
+            <appender-ref ref="console" />
+        </root>
+    </springProfile>
+    <springProfile name="test,prod">
+        <root level="debug">
+            <appender-ref ref="all" />
+            <appender-ref ref="error" />
+        </root>
+    </springProfile>
+ </configuration>

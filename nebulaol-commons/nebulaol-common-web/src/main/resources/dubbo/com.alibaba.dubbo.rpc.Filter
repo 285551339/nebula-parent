@@ -1,0 +1,2 @@
+traceIdDubboFilter=com.xy.nebulaol.common.web.filter.TraceIdDubboFilter
+dubboExceptionFilter=com.xy.nebulaol.common.web.filter.DubboExceptionFilter

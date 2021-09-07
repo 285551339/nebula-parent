@@ -1,0 +1,62 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        group: SDX_A_GROUP
+      config:
+        server-addr: 127.0.0.1:8848
+        group: SDX_A_GROUP
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    database: 0
+    timeout: 3000
+    cache:
+      expiration: 3600
+      expries: '{"application":1800, "test1":0, "test2":1800}'
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-wait: -1ms
+        max-active: 8
+
+# 网关验签依赖日志打印
+gateway:
+  log:
+    enable: true
+    ignoreUrls:
+      - /test**
+      - /admin/**
+      - /api/uaa/application/testLog
+  sign:
+    enable: true
+    key:
+      'sdx-manage-uaa': 'OpLyfckC0F8KVml6'
+    ignoreUrls:
+      - /api/uaa/common/upload
+      - /test**
+      - /admin/**
+      - /api/ops/wechat/server/*
+    timeout: 600000
+  auth:
+    enable: true
+    secret: 7NzrNPzVQ24ZtypWjD24rV9wpOHO1Lxg
+    ignoreUrls:
+      - /api/uaa/common/upload
+      - /test**
+      - /admin/**
+      - /api/ops/wechat/server/*
+      - /api/uaa/user/send/sms
+      - /api/uaa/user/forgetPwd
+      - /api/client/hotel/login
+
+logging:
+  level:
+    root: INFO
+    com.xy.nebulaol: DEBUG
+  logback:
+    path: /home/sdx/logs
+    name: ${spring.application.name}

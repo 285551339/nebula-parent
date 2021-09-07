@@ -1,0 +1,83 @@
+server:
+  port: 2070
+
+spring:
+  application:
+    name: nebulaol-user
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: dev
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    default-property-inclusion: non_null
+
+# feign
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+#  hystrix:
+#    enabled: true
+  sentinel:
+    enabled: true
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml, application/xml, application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+#  client:
+#    config:
+#      default:
+#        connect-timeout: 10000
+#        read-timeout: 10000
+
+## hystrix配置
+##hystrix:
+##  shareSecurityContext: true
+##  command:
+##    default:
+##      execution:
+##        isolation:
+##          thread:
+##            timeoutInMilliseconds: 60000
+#
+
+mybatis-plus:
+  mapperLocations: classpath:mapper/**/*.xml
+
+pagehelper:
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+# actuator配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    jmx:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+# 自定义线程池配置
+async:
+  executor:
+    thread:
+      corePoolSize: 20
+      maxPoolSize: 200
+      queueCapacity: 100
+      namePrefix: ${spring.application.name}
+      keepAliveSeconds: 300
+
+
+
+  

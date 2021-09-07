@@ -1,0 +1,91 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        group: xy_A_GROUP
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        group: xy_A_GROUP
+  datasource:
+    url: jdbc:mysql://10.0.0.251:3306/sdx_user?useSSL=false&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: Lancet0816
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      filters: stat
+      maxActive: 20
+      initialSize: 1
+      maxWait: 60000
+      minIdle: 1
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxOpenPreparedStatements: 20
+      connection-init-sqls: set names utf8mb4
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    database: 0
+    timeout: 3000
+    cache:
+      expiration: 3600
+      expries: '{"application":1800, "test1":0, "test2":1800}'
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-wait: -1ms
+        max-active: 8
+
+#====================================Dubbo config===============================================
+dubbo:
+  scan:
+    base-packages: com.xy.nebulaol.user
+  application:
+    name: ${spring.application.name}
+  protocol:
+    id: dubbo
+    name: dubbo
+    port: 20070
+  registry:
+    id: ${spring.application.name}
+    address: nacos://localhost:8848
+  #  config-center:
+  #    address: nacos://localhost:8848
+  #  metadata-report:
+  #    address: nacos://localhost:8848
+  cloud:
+    subscribed-services: nebulaol-user
+  consumer:
+    check: false
+    timeout: 3000
+    retries: 0
+
+ribbon:
+  ReadTimeout: 3000
+  ConnectTimeout: 3000
+  MaxAutoRetries: 0 #同一台实例最大重试次数,不包括首次调用
+  MaxAutoRetriesNextServer: 0 #重试负载均衡其他的实例最大重试次数,不包括首次调用
+  OkToRetryOnAllOperations: false  #是否所有操作都重试
+
+logging:
+  level:
+    root: INFO
+    com.xy.sdx: INFO
+    com.xy.sdx.user.mapper: INFO
+    org.apache.ibatis: INFO
+    org.mybatis.spring: INFO
+    com.baomidou.mybatisplus: INFO
+  logback:
+    path: ./logs
+    name: ${spring.application.name}
+
