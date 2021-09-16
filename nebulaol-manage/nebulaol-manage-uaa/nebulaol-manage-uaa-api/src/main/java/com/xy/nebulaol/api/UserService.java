@@ -26,7 +26,7 @@ public interface UserService {
      * @param code
      * @return
      */
-    BaseResponse wechatLogin(String code);
+    LoginRespVo wechatLogin(String code);
 
     /**
      * 登出
