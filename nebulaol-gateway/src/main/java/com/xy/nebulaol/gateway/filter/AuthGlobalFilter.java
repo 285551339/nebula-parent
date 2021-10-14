@@ -98,12 +98,44 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
                 return responseError(exchange, BaseResponse.error(ErrorType.ERROR_SIGNATURE));
             }
         }
+        boolean isConsumer = CommonConstant.APPCODE_SDX_CONSUMER_SET.contains(appCode);
+        boolean isManage = CommonConstant.APPCODE_SDX_MANAGE_SET.contains(appCode);
+        BaseUserReq baseUserReq = null;
         ServerHttpRequest newRequest = exchange.getRequest();
+        //验证权限
+        if (gatewayProperties.getAuth().isEnable() && !ignoreAuthPath(request.getURI().getPath())) {
+            //无效token
+            if (StringUtils.isEmpty(token)) {
+                log.error("token为空: ip:{}, url:{}, appCode:{}, traceId:{}, ts:{}", ip, rawPath, appCode, traceId, ts);
+                return responseError(exchange, BaseResponse.error(ErrorType.ERROR_TOKEN));
+            }
+            if (isConsumer) {
+                baseUserReq = getUser(appCode, token);
+                if (baseUserReq == null) {
+                    log.error("无效的token: ip:{}, url:{}, appCode:{}, token:{}", ip, rawPath, appCode, token);
+                    return responseError(exchange, BaseResponse.error(ErrorType.ERROR_TOKEN));
+                }
+                //权限不足(管理系统验证接口权限，消费者端暂时不验证)
+            } else if (isManage) {
+//                Route route = (Route) exchange.getAttributes().get(ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR);
+//                //路由ID和appid不符
+//                if (!route.getId().equals(appCode)) {
+//                    log.error("路由ID:{}与appCode{}不符", route.getId(), appCode);
+//                    return responseError(exchange, BaseResponse.error(ErrorType.ERROR_PERMISSION));
+//                }
+                /*baseAdminReq = getAdmin(token);
+                if (baseAdminReq == null) {
+                    log.error("权限不足: ip:{}, url:{}, appCode:{}, token:{}", ip, rawPath, appCode, token);
+                    return responseError(exchange, BaseResponse.error(ErrorType.ERROR_TOKEN));
+                }*/
+            }
+        }
         return chain.filter(exchange.mutate().request(newRequest).build());
     }
 
     /**
      * 根据path和method组装resourceCode
+     *
      * @param path
      * @param method
      * @return
@@ -116,6 +148,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     /**
      * 判断此url是否验证签名
+     *
      * @param url
      * @return
      */
@@ -125,6 +158,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     /**
      * 判断此url是否验证权限
+     *
      * @param url
      * @return
      */
@@ -155,31 +189,20 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
      * @param token
      * @return
      */
-    /*private BaseUserReq getUser(String appCode, String token) {
+    private BaseUserReq getUser(String appCode, String token) {
         String tokenKey = null;
         switch (appCode) {
-            case CommonConstant.APPCODE_SDX_HOTEL_APPLET:
-                tokenKey = RedisConstant.SDX_APPLET_HOTEL.TOKEN_USER_HOTEL;
-                break;
-            case CommonConstant.APPCODE_SDX_NETCAFE_WOA:
-                tokenKey = RedisConstant.SDX_APPLET_NETCAFE.TOKEN_USER_NETCAFE_WOA;
-                break;
-            case CommonConstant.APPCODE_SDX_CLOUDESK:
-                tokenKey = RedisConstant.SDX_APPLET_NETCAFE.TOKEN_USER_NETCAFE_CLOUDESK;
-                break;
-            case CommonConstant.EHOTEL_CLIENT:
-                tokenKey = RedisConstant.SDX_CLIENT_HOTEL.TOKEN_CLIENT_USER_HOTEL;
-                break;
-            case CommonConstant.EHOTEL_CONSOLE:
-                tokenKey = RedisConstant.SDX_CLIENT_HOTEL.TOKEN_CLIENT_CONSOLE;
+            case CommonConstant.APPCODE_XY_HOTEL_APPLET:
+                tokenKey = RedisConstant.XY_APPLET_HOTEL.TOKEN_USER_HOTEL;
                 break;
         }
         Object user = redisService.get(tokenKey + token);
         return user == null ? null : (BaseUserReq)user;
-    }*/
+    }
 
     /**
      * 自定义返回
+     *
      * @param exchange
      * @param baseResponse
      * @return

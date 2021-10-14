@@ -2,10 +2,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 10.0.2.50:8848
         group: XY_A_GROUP
       config:
-        server-addr: 127.0.0.1:8848
+        server-addr: 10.0.2.50:8848
         file-extension: yaml
         group: XY_A_GROUP
   datasource:
@@ -54,13 +54,13 @@ seata:
   config:
     type: nacos
     nacos:
-      server-addr: 127.0.0.1:8848
+      server-addr: 10.0.2.50:8848
       group: SEATA_GROUP
   registry:
     type: nacos
     nacos:
       application: seata-server
-      server-addr: 127.0.0.1:8848
+      server-addr: 10.0.2.50:8848
 
 #====================================Dubbo config===============================================
 dubbo:
@@ -74,7 +74,7 @@ dubbo:
     port: 20070
   registry:
     id: ${spring.application.name}
-    address: nacos://localhost:8848
+    address: nacos://10.0.2.50:8848
   #  config-center:
   #    address: nacos://localhost:8848
   #  metadata-report:

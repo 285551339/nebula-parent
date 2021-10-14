@@ -2,10 +2,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 10.0.8.12:8848
+        server-addr: 10.0.2.50:8848
         group: SDX_A_GROUP
       config:
-        server-addr: 10.0.8.12:8848
+        server-addr: 10.0.8.50:8848
         group: SDX_A_GROUP
   redis:
     host: 10.0.8.1
@@ -35,30 +35,14 @@ gateway:
       'sdx-manage-uaa': 'OpLyfckC0F8KVml6'
     ignoreUrls:
       - /api/uaa/common/upload
-        - /api/uaa/common/wechat/upload
-        - /api/uaa/common/systemTime
-        - /api/ops/wechat/server/*
-        - /api/client/hotel/login
-        - /api/pay/notify/*
     timeout: 600000
   auth:
     enable: true
     secret: 7NzrNPzVQ24ZtypWjD24rV9wpOHO1Lxg
     ignoreUrls:
       - /api/uaa/common/upload
-        - /api/uaa/common/wechat/upload
-        - /api/uaa/common/systemTime
-        - /api/uaa/login
-        - /api/uaa/wechat/login
-        - /api/ops/wechat/server/*
-        - /api/uaa/user/send/sms
-        - /api/uaa/user/forgetPwd
-        - /api/client/hotel/login
-        - /api/pay/notify/*
-        - /api/uaa/user/bind/wechat
-        - /api/client/netcafe/wechat/jsapi/sign
-        - /api/client/netcafe/wechat/oauth/url
-        - /api/client/netcafe/wechat/token
+      - /api/uaa/common/wechat/upload
+      - /api/uaa/common/systemTime
 
 logging:
   level:

@@ -2,10 +2,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 127.0.0.1:8848
+        server-addr: 10.0.2.50:8848
         group: XY_A_GROUP
       config:
-        server-addr: 127.0.0.1:8848
+        server-addr: 10.0.2.50:8848
         file-extension: yaml
         group: XY_A_GROUP
       #    sentinel:
@@ -39,6 +39,14 @@ spring:
         max-idle: 8
         max-wait: -1ms
         max-active: 8
+  rabbitmq:
+    host: ${RABBIT_MQ_HOST:10.0.8.17}
+    port:  ${RABBIT_MQ_PORT:5672}
+    username: ${RABBIT_MQ_USERNAME:admin}
+    password: ${RABBIT_MQ_PASSWORD:sdxnetcafe}
+    listener:
+      simple:
+        default-requeue-rejected: false
 
 #====================================Dubbo config===============================================
 dubbo:
@@ -52,7 +60,7 @@ dubbo:
     port: 21030
   registry:
     id: ${spring.application.name}
-    address: spring-cloud://localhost
+    address: spring-cloud://10.0.2.50
   #  config-center:
   #    address: nacos://localhost:8848
   #  metadata-report:

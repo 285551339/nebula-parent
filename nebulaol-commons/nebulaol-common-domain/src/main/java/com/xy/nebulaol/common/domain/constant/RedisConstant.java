@@ -34,5 +34,10 @@ public class RedisConstant {
         public static final String REDIS_USER_PRI_KEY = "USER:AUTH:JWT:PRI";
         public static final String REDIS_USER_PUB_KEY = "USER:AUTH:JWT:PUB";
    }
+    public static class XY_APPLET_HOTEL {
+        public static final String ONLINE_USER_HOTEL = "online:user:hotel:";
+        public static final String TOKEN_USER_HOTEL = "token:user:hotel:";
+        public static final String TOKEN_REFRESH_USER_HOTEL = "token:refresh:user:hotel:";
+    }
 
 }

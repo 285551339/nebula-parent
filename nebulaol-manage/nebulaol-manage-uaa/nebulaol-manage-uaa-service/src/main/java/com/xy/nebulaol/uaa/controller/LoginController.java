@@ -2,10 +2,12 @@ package com.xy.nebulaol.uaa.controller;
 
 import com.xy.nebulaol.api.UserService;
 import com.xy.nebulaol.common.domain.vo.resp.BaseResponse;
+import com.xy.nebulaol.uaa.component.CommonConstants;
 import com.xy.nebulaol.vo.req.LoginReqVo;
 import com.xy.nebulaol.vo.req.RefreshTokenReqVo;
 import com.xy.nebulaol.vo.req.WechatLoginVo;
 import com.xy.nebulaol.vo.resp.LoginRespVo;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +26,8 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-
+    @Autowired
+    RabbitTemplate rabbitTemplate;
     /**
      * 登录
      * @param req
@@ -32,8 +35,11 @@ public class LoginController {
      */
     @PostMapping("/login")
     public BaseResponse login(@Valid @RequestBody LoginReqVo req) {
-        LoginRespVo vo = userService.login(req);
-        return BaseResponse.ok(vo);
+       // LoginRespVo vo = userService.login(req);
+        for (int i=0 ; i<10;i++) {
+            rabbitTemplate.convertAndSend(CommonConstants.NOTIFY_BAOTUAN_CHECKIN_KEY, "msg"+i);
+        }
+        return BaseResponse.ok();
     }
 
     /**
