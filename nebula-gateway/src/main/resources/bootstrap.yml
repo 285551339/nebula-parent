@@ -1,0 +1,56 @@
+server:
+  port: 2020
+
+spring:
+  application:
+    name: nebula-gateway
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: nebulaol-manage-uaa
+          uri: lb://nebulaol-manage-uaa
+          predicates:
+            - Path=/api/uaa/**
+          filters:
+            - StripPrefix=2
+
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+#  hystrix:
+#    enabled: true
+  sentinel:
+    enabled: true
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml, application/xml, application/json
+      min-request-size: 2048
+    response:
+      enabled: true
+
+ribbon:
+  okhttp:
+    enabled: true
+
+# actuator配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    jmx:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>nebula-canal</artifactId>
+        <groupId>com.xy.nebula</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>nebula-canal-service</artifactId>
+    <packaging>jar</packaging>
+
+
+    <dependencies>
+        <!--内部服务-->
+        <dependency>
+            <groupId>com.xy.nebula</groupId>
+            <artifactId>nebula-common-domain</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xy.nebula</groupId>
+            <artifactId>nebula-common-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xy.nebula</groupId>
+            <artifactId>nebula-common-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xy.nebula</groupId>
+            <artifactId>nebula-common-monitor</artifactId>
+        </dependency>
+        <!--内部服务-->
+        <dependency>
+            <groupId>com.xy.nebula</groupId>
+            <artifactId>nebula-user-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-dubbo</artifactId>
+        </dependency>
+    </dependencies>
+</project>
