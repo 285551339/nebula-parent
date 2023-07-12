@@ -79,7 +79,7 @@
             <artifactId>jackson-annotations</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.xy.sdx</groupId>
+            <groupId>com.nebula</groupId>
             <artifactId>redis-spring-boot-starter</artifactId>
         </dependency>
         <dependency>

@@ -1,6 +1,6 @@
 package com.xy.nebulaol.uaa.Service;
 
-import com.xy.nebulao.commons.utils.bean.BeanUtil;
+import com.xy.nebula.commons.utils.bean.BeanUtil;
 import com.xy.nebulaol.api.UserService;
 import com.xy.nebulaol.common.domain.vo.resp.BaseResponse;
 import com.xy.nebulaol.user.api.RpcUserService;

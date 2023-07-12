@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.xy.nebula.commons.utils.bean.SpringBeanUtil;
 import com.xy.nebula.commons.utils.network.HttpClientUtil;
 import com.xy.nebula.commons.utils.random.IdUtil;
-import com.xy.sdx.redis.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;

@@ -1,6 +1,6 @@
 package com.xy.nebula.common.web.util;
 
-import com.xy.nebulao.commons.utils.bean.BeanMapperLocalUtil;
+import com.xy.nebula.commons.utils.bean.BeanMapperLocalUtil;
 import com.xy.nebula.common.domain.vo.resp.PageResponse;
 
 /**

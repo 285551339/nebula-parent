@@ -1,6 +1,6 @@
 package com.xy.nebula.common.web.interceptor;
 
-import com.xy.nebulao.commons.utils.RequestUtil;
+import com.xy.nebula.commons.utils.RequestUtil;
 import com.xy.nebula.common.domain.constant.CommonConstant;
 import com.xy.nebula.common.domain.context.ThreadLocalContext;
 import feign.RequestInterceptor;
