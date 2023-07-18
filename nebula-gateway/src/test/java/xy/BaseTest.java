@@ -1,6 +1,6 @@
 package xy;
 
-import com.xy.nebula.common.domain.constant.CommonConstant;
+import com.nebula.common.domain.constant.CommonConstant;
 
 import java.util.HashMap;
 import java.util.Map;

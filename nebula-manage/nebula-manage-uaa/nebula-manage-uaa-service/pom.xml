@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>nebula-manage-uaa</artifactId>
-        <groupId>com.xy.nebula</groupId>
+        <groupId>com.nebula</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -29,23 +29,23 @@
         </dependency>
 
         <dependency>
-            <groupId>com.xy.nebula</groupId>
+            <groupId>com.nebula</groupId>
             <artifactId>nebula-common-domain</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.xy.nebula</groupId>
+            <groupId>com.nebula</groupId>
             <artifactId>nebula-common-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.xy.nebula</groupId>
+            <groupId>com.nebula</groupId>
             <artifactId>nebula-common-utils</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.xy.nebula</groupId>
+            <groupId>com.nebula</groupId>
             <artifactId>nebula-common-monitor</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.xy.nebula</groupId>
+            <groupId>com.nebula</groupId>
             <artifactId>nebula-manage-uaa-api</artifactId>
         </dependency>
         <dependency>
@@ -65,7 +65,7 @@
             <artifactId>canal.client</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.xy.nebula</groupId>
+            <groupId>com.nebula</groupId>
             <artifactId>nebula-common-utils</artifactId>
         </dependency>
     </dependencies>

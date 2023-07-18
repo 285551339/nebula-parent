@@ -1,11 +1,11 @@
 package xy.uaa;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xy.nebula.commons.utils.SignUtil;
-import com.xy.nebula.commons.utils.network.HttpClientUtil;
-import com.xy.nebula.common.domain.constant.CommonConstant;
-import com.xy.nebula.common.domain.vo.resp.BaseResponse;
-import com.xy.nebula.common.domain.vo.resp.ErrorType;
+import com.nebula.commons.utils.SignUtil;
+import com.nebula.commons.utils.network.HttpClientUtil;
+import com.nebula.common.domain.constant.CommonConstant;
+import com.nebula.common.domain.vo.resp.BaseResponse;
+import com.nebula.common.domain.vo.resp.ErrorType;
 import org.junit.Test;
 import org.springframework.util.Assert;
 import xy.BaseTest;

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>nebula-parent</artifactId>
-        <groupId>com.xy.nebula</groupId>
+        <groupId>com.nebula</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -13,11 +13,11 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.xy.nebula</groupId>
+            <groupId>com.nebula</groupId>
             <artifactId>nebula-common-domain</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.xy.nebula</groupId>
+            <groupId>com.nebula</groupId>
             <artifactId>nebula-user-api</artifactId>
         </dependency>
         <dependency>
