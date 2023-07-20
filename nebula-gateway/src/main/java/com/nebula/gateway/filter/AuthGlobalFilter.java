@@ -45,7 +45,7 @@ import java.util.stream.Stream;
 @Slf4j
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
-    private static final PathMatcher pathMatcher = new AntPathMatcher(System.getProperty("file.separator"));
+    private static final PathMatcher PATH_MATCHER = new AntPathMatcher(System.getProperty("file.separator"));
 
     @Autowired
     private CustomGatewayProperties gatewayProperties;
@@ -123,7 +123,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
      * @return
      */
     private boolean ignoreSignPath(String url) {
-        return Stream.of(gatewayProperties.getSign().getIgnoreUrls()).anyMatch(ignoreUrl -> pathMatcher.match(ignoreUrl, url));
+        return Stream.of(gatewayProperties.getSign().getIgnoreUrls()).anyMatch(ignoreUrl -> PATH_MATCHER.match(ignoreUrl, url));
     }
 
     /**
@@ -133,7 +133,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
      * @return
      */
     private boolean ignoreAuthPath(String url) {
-        return Stream.of(gatewayProperties.getAuth().getIgnoreUrls()).anyMatch(ignoreUrl -> pathMatcher.match(ignoreUrl, url));
+        return Stream.of(gatewayProperties.getAuth().getIgnoreUrls()).anyMatch(ignoreUrl -> PATH_MATCHER.match(ignoreUrl, url));
     }
 
     /**

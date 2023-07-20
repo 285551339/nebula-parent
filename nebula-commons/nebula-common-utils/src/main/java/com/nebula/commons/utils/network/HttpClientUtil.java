@@ -40,27 +40,33 @@ public class HttpClientUtil {
     //编码格式
     private static final String CHAR_SET = "UTF-8";
     //连接超时时间，单位：毫秒
-    private static final int connectTimeout = 30 * 1000;
+    private static final int CONNECT_TIME_OUT = 30 * 1000;
     //响应时间，单位：毫秒
-    private static final int socketTimeout = 30 * 1000;
-    //从connect Manager(连接池)获取Connection 超时时间，单位：毫秒
-    private static final int connectionRequestTimeout = 3 * 1000;
+    private static final int SOCKET_TIME_OUT = 30 * 1000;
+    /**
+    从connect Manager(连接池)获取Connection 超时时间，单位：毫秒
+    */
+    private static final int CONNECTION_REQUEST_TIME_OUT = 3 * 1000;
     //连接池最大连接数
-    private static final int maxPoolConnections = 800;
+    private static final int MAX_POOL_CONNECTIONS = 800;
     //每个路由最大连接数
-    private static final int maxPoolConnectionsPerRoute = 400;
+    private static final int MAX_POOL_CONNECTIONS_PER_ROUTE = 400;
 
-    private static final CloseableHttpClient httpClient;
+    private static final CloseableHttpClient HTTP_CLIENT;
+    /**
+     * 重试次数
+     */
+    private static final int RETRY_COUNT = 3;
 
     /**
-     * httplient初始化
+     *  httplient 初始化
      */
     static {
         // 加入3次重试机制，请求失败后进行重试
         HttpRequestRetryHandler myRetryHandler = new HttpRequestRetryHandler() {
             @Override
             public boolean retryRequest(IOException exception, int executionCount, HttpContext context) {
-                if (executionCount >= 3) {
+                if (executionCount >= RETRY_COUNT) {
                     // Do not retry if over max retry count
                     return false;
                 }
@@ -69,12 +75,12 @@ public class HttpClientUtil {
 
         };
         PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
-        cm.setMaxTotal(maxPoolConnections);
-        cm.setDefaultMaxPerRoute(maxPoolConnectionsPerRoute);
+        cm.setMaxTotal(MAX_POOL_CONNECTIONS);
+        cm.setDefaultMaxPerRoute(MAX_POOL_CONNECTIONS_PER_ROUTE);
         RequestConfig config = RequestConfig.custom()
-                .setSocketTimeout(socketTimeout).setConnectTimeout(connectTimeout)
-                .setConnectionRequestTimeout(connectionRequestTimeout).build();
-        httpClient = HttpClients.custom().setConnectionManager(cm).setDefaultRequestConfig(config).setRetryHandler(myRetryHandler).build();
+                .setSocketTimeout(SOCKET_TIME_OUT).setConnectTimeout(CONNECT_TIME_OUT)
+                .setConnectionRequestTimeout(CONNECTION_REQUEST_TIME_OUT).build();
+        HTTP_CLIENT = HttpClients.custom().setConnectionManager(cm).setDefaultRequestConfig(config).setRetryHandler(myRetryHandler).build();
     }
 
     public static String get(String url) {
@@ -110,7 +116,7 @@ public class HttpClientUtil {
             // 设置请求头
             buildHeader(headers, httpGet);
             // 执行请求并获取结果
-            return getResponse(httpClient, httpGet);
+            return getResponse(HTTP_CLIENT, httpGet);
         } catch (Exception e) {
             log.error("httpclient request failed", e);
         }
@@ -145,7 +151,7 @@ public class HttpClientUtil {
             // 设置请求参数
             buildParam(params, httpPost);
             // 执行请求并获取结果
-            return getResponse(httpClient, httpPost);
+            return getResponse(HTTP_CLIENT, httpPost);
         } catch (Exception e) {
             log.error("httpclient request failed", e);
         }
@@ -180,7 +186,7 @@ public class HttpClientUtil {
             // 设置请求参数
             buildJsonParams(params, httpPost);
             // 执行请求并获取结果
-            return getResponse(httpClient, httpPost);
+            return getResponse(HTTP_CLIENT, httpPost);
         } catch (Exception e) {
             log.error("httpclient request failed", e);
         }
@@ -215,7 +221,7 @@ public class HttpClientUtil {
             // 设置请求参数
             buildParam(params, httpPut);
             // 执行请求并获取结果
-            return getResponse(httpClient, httpPut);
+            return getResponse(HTTP_CLIENT, httpPut);
         } catch (Exception e) {
             log.error("httpclient request failed", e);
         }
@@ -231,7 +237,7 @@ public class HttpClientUtil {
             // 设置请求参数
             buildJsonParams(params, httpPut);
             // 执行请求并获取结果
-            return getResponse(httpClient, httpPut);
+            return getResponse(HTTP_CLIENT, httpPut);
         } catch (Exception e) {
             log.error("httpclient request failed", e);
         }
@@ -271,7 +277,7 @@ public class HttpClientUtil {
             // 设置请求头
             buildHeader(headers, httpDelete);
             // 执行请求并获取结果
-            return getResponse(httpClient, httpDelete);
+            return getResponse(HTTP_CLIENT, httpDelete);
         } catch (Exception e) {
             log.error("httpclient request failed", e);
         }
@@ -297,7 +303,8 @@ public class HttpClientUtil {
             // 设置文件流
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
             builder.setCharset(Charset.forName(CHAR_SET));
-            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);//加上此行代码解决返回中文乱码问题
+            //加上此行代码解决返回中文乱码问题
+            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
             builder.addBinaryBody(fileParamName, bytes, ContentType.DEFAULT_BINARY, suffixFilename);
             if (params != null) {
                 params.forEach((key, value) -> {
@@ -306,7 +313,7 @@ public class HttpClientUtil {
             }
             HttpEntity entity = builder.build();
             httpPost.setEntity(entity);
-            return getResponse(httpClient, httpPost);
+            return getResponse(HTTP_CLIENT, httpPost);
         } catch (Exception e) {
             log.error("httpclient request failed", e);
         }
@@ -333,8 +340,10 @@ public class HttpClientUtil {
             // 设置文件流
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
             builder.setCharset(Charset.forName(CHAR_SET));
-            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);//加上此行代码解决返回中文乱码问题
-            builder.addBinaryBody(fileParamName, file, ContentType.MULTIPART_FORM_DATA, fileName);// 文件流
+            //加上此行代码解决返回中文乱码问题
+            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+            // 文件流
+            builder.addBinaryBody(fileParamName, file, ContentType.MULTIPART_FORM_DATA, fileName);
             if (params != null) {
                 params.forEach((key, value) -> {
                     builder.addTextBody(key, value);
@@ -342,7 +351,7 @@ public class HttpClientUtil {
             }
             HttpEntity entity = builder.build();
             httpPost.setEntity(entity);
-            return getResponse(httpClient, httpPost);
+            return getResponse(HTTP_CLIENT, httpPost);
         } catch (Exception e) {
             log.error("httpclient request failed", e);
         }
@@ -386,7 +395,7 @@ public class HttpClientUtil {
             // 设置请求头
             buildHeader(headers, httpGet);
             // 执行请求并获取结果
-            httpResponse = httpClient.execute(httpGet);
+            httpResponse = HTTP_CLIENT.execute(httpGet);
             // 获取返回结果
             if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                 if (httpResponse.getEntity() != null) {

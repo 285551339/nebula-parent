@@ -52,7 +52,7 @@ public class RabbitListenerAop {
     }
 
     Map<String, Object> getNameAndValue(JoinPoint joinPoint) {
-        Map<String, Object> param = new HashMap<>();
+        Map<String, Object> param = new HashMap<>(16);
         Object[] paramValues = joinPoint.getArgs();
         String[] paramNames = ((MethodSignature)joinPoint.getSignature()).getParameterNames();
         for (int i = 0; i < paramNames.length; i++) {

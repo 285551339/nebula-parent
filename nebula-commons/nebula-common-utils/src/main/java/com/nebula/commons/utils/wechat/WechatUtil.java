@@ -189,7 +189,7 @@ public class WechatUtil {
     public static boolean createMenu(String menuJsonStr, String accessToken) {
         // 拼装创建菜单的url
         String requestUrl = MENU_CREATE_URL.replace(WechatConstant.PARAM_PLACEHOLDER_ACCESS_TOKEN, accessToken);
-        Map<String, Object> headerMap = new HashMap<>();
+        Map<String, Object> headerMap = new HashMap<>(16);
         Map<String, String> params = JSONObject.parseObject(menuJsonStr, Map.class);
         headerMap.put(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8);
         log.info("远程请求创建公众号菜单accessToken:{},menuJsonStr:{}", accessToken, menuJsonStr);
@@ -509,7 +509,7 @@ public class WechatUtil {
      * @return
      */
     public static Map<String, String> getJssdkSignature(String jsapi_ticket, String url) {
-        Map<String, String> ret = new HashMap<String, String>();
+        Map<String, String> ret = new HashMap<String, String>(16);
         String nonce_str = createNonceStr();
         String timestamp = createTimestamp();
         String string1;

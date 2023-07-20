@@ -9,7 +9,8 @@ import java.util.Date;
 @Slf4j
 public class IdCardUtil {
 
-    private static SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+
+    private static final  int ID_CARD_NUM = 18;
 
     /**
      * 身份证号大写后取MD5
@@ -58,6 +59,7 @@ public class IdCardUtil {
             return 0;
         }
         Date now = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
         // 年份
         String year = idCard.substring(6, 10);
         // 月份
@@ -117,7 +119,7 @@ public class IdCardUtil {
         boolean matches = idCard.matches(regularExpression);
         //判断第18位校验值
         if (matches) {
-            if (idCard.length() == 18) {
+            if (idCard.length() == ID_CARD_NUM) {
                 try {
                     char[] charArray = idCard.toCharArray();
                     //前十七位加权因子

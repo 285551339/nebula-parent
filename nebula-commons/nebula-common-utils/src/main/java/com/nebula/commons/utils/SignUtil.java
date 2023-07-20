@@ -95,7 +95,7 @@ public class SignUtil {
      * @return
      */
     public static Map<String, Object> obj2Map(Object obj) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(16);
         // 获取f对象对应类中的所有属性域
         Field[] fields = obj.getClass().getDeclaredFields();
         for (int i = 0, len = fields.length; i < len; i++) {

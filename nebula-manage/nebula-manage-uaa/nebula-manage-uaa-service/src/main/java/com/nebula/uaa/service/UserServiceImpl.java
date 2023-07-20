@@ -1,4 +1,4 @@
-package com.nebula.uaa.Service;
+package com.nebula.uaa.service;
 
 import com.nebula.uaa.api.UserService;
 import com.nebula.uaa.vo.req.LoginReqVo;

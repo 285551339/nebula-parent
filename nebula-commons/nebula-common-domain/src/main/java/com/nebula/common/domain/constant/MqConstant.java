@@ -1,6 +1,6 @@
 package com.nebula.common.domain.constant;
 
-public class MQConstant {
+public class MqConstant {
 
     //订单支付key
     public static final String HOTEL_ORDER_PAY_KEY = "hotel.order.pay.key";

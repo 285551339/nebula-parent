@@ -19,23 +19,23 @@ public class ThreadLocalContext {
     /**
      * 使用InheritableThreadLocal便于在主子线程间传递参数
      */
-    private static final ThreadLocal<Map<String, Object>> context = new InheritableThreadLocal<>();
+    private static final ThreadLocal<Map<String, Object>> CONTEXT = new InheritableThreadLocal<>();
 
     public static void set(String key, Object value) {
-        Map<String, Object> map = context.get();
+        Map<String, Object> map = CONTEXT.get();
         if (map == null) {
-            map = new HashMap<>();
+            map = new HashMap<>(32);
         }
         map.put(key, value);
-        context.set(map);
+        CONTEXT.set(map);
     }
 
     public static void remove() {
-        context.remove();
+        CONTEXT.remove();
     }
 
     public static String getTraceId() {
-        Map<String, Object> map = context.get();
+        Map<String, Object> map = CONTEXT.get();
         Object traceIdObj = map == null ? null : map.get(CommonConstant.TRACEID);
         return traceIdObj == null ? null : traceIdObj.toString();
     }
@@ -45,7 +45,7 @@ public class ThreadLocalContext {
     }
 
     public static String getAppCode() {
-        Map<String, Object> map = context.get();
+        Map<String, Object> map = CONTEXT.get();
         Object appCode = map == null ? null : map.get(CommonConstant.APPCODE);
         return appCode == null ? null : appCode.toString();
     }
@@ -55,7 +55,7 @@ public class ThreadLocalContext {
     }
 
     public static BaseAdminReq getAdmin() {
-        Map<String, Object> map = context.get();
+        Map<String, Object> map = CONTEXT.get();
         Object adminObj = map == null ? null : map.get(CommonConstant.ADMIN);
         return adminObj == null ? null : (BaseAdminReq) adminObj;
     }
@@ -65,7 +65,7 @@ public class ThreadLocalContext {
     }
 
     public static BaseUserReq getUser() {
-        Map<String, Object> map = context.get();
+        Map<String, Object> map = CONTEXT.get();
         Object userObj = map == null ? null : map.get(CommonConstant.USER);
         return userObj == null ? null : (BaseUserReq) userObj;
     }
@@ -75,7 +75,7 @@ public class ThreadLocalContext {
     }
 
     public static String getIp() {
-        Map<String, Object> map = context.get();
+        Map<String, Object> map = CONTEXT.get();
         Object ipObj = map == null ? null : map.get(CommonConstant.IP);
         return ipObj == null ? null : ipObj.toString();
     }
@@ -85,7 +85,7 @@ public class ThreadLocalContext {
     }
 
     public static Long getCurrentBrand() {
-        Map<String, Object> map = context.get();
+        Map<String, Object> map = CONTEXT.get();
         Object brandObj = map == null ? null : map.get(CommonConstant.CURRENT_BRAND);
         return brandObj == null ? null : Long.valueOf(brandObj.toString());
     }
@@ -95,7 +95,7 @@ public class ThreadLocalContext {
     }
 
     public static Long getCurrentRole() {
-        Map<String, Object> map = context.get();
+        Map<String, Object> map = CONTEXT.get();
         Object roleObj = map == null ? null : map.get(CommonConstant.CURRENT_ROLE);
         return roleObj == null ? null :  Long.valueOf(roleObj.toString());
     }

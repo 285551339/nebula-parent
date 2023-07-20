@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnClass(value = AmqpProxyFactoryBean.class)
-public class RabbitMQConfig {
+public class RabbitMqConfig {
 
     @Bean
     public MessageConverter messageConverter(){

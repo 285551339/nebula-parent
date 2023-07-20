@@ -27,7 +27,7 @@ import java.util.stream.Stream;
 @Slf4j
 public class CacheBodyParamsFilter implements GlobalFilter, Ordered {
 
-    private static final PathMatcher pathMatcher = new AntPathMatcher(System.getProperty("file.separator"));
+    private static final PathMatcher PATH_MATCHER = new AntPathMatcher(System.getProperty("file.separator"));
     @Autowired
     private CustomGatewayProperties gatewayProperties;
 
@@ -62,7 +62,7 @@ public class CacheBodyParamsFilter implements GlobalFilter, Ordered {
     }
 
     private boolean ignoreLogPath(String url) {
-        return Stream.of(gatewayProperties.getLog().getIgnoreUrls()).anyMatch(ignoreUrl -> pathMatcher.match(ignoreUrl, url));
+        return Stream.of(gatewayProperties.getLog().getIgnoreUrls()).anyMatch(ignoreUrl -> PATH_MATCHER.match(ignoreUrl, url));
     }
 
     @Override

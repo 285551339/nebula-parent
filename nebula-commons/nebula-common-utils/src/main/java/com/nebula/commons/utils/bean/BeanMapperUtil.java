@@ -16,7 +16,7 @@ import java.util.List;
  */
 public class BeanMapperUtil {
 
-    private static final DozerBeanMapper dozer = new DozerBeanMapper();
+    private static final DozerBeanMapper DOZER = new DozerBeanMapper();
     /**
      * 拷贝对象
      * @param source
@@ -26,7 +26,7 @@ public class BeanMapperUtil {
      */
     public static <T> T map(Object source, Class<T> destinationClass) {
         if(null != source) {
-            return dozer.map(source, destinationClass);
+            return DOZER.map(source, destinationClass);
         }
         return null;
     }
@@ -42,7 +42,7 @@ public class BeanMapperUtil {
         List<T> destinationList = Lists.newArrayList();
         if (sourceList != null) {
             for (Object sourceObject : sourceList) {
-                T destinationObject = dozer.map(sourceObject, destinationClass);
+                T destinationObject = DOZER.map(sourceObject, destinationClass);
                 destinationList.add(destinationObject);
             }
         }
@@ -60,7 +60,7 @@ public class BeanMapperUtil {
         List<T> destinationList = Lists.newArrayList();
         if (sourceList != null) {
             for (Object sourceObject : sourceList) {
-                T destinationObject = (T) dozer.map(sourceObject, t.getClass());
+                T destinationObject = (T) DOZER.map(sourceObject, t.getClass());
                 destinationList.add(destinationObject);
             }
         }
@@ -73,6 +73,6 @@ public class BeanMapperUtil {
      * @param destination
      */
     public static void copy(Object source, Object destination) {
-        dozer.map(source, destination);
+        DOZER.map(source, destination);
     }
 }

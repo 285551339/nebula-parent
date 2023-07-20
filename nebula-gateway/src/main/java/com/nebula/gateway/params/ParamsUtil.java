@@ -90,7 +90,7 @@ public class ParamsUtil {
      */
     public static Map<String, Object> buildParams(ServerHttpRequest request, String body) {
         // 整理参数
-        Map<String, Object> params = new HashMap<>();
+        Map<String, Object> params = new HashMap<>(16);
         if (request.getQueryParams() != null) {
             params.putAll(request.getQueryParams().toSingleValueMap());
         }

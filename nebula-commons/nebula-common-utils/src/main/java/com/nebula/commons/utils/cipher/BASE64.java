@@ -589,6 +589,7 @@ public class BASE64 {
          * @return an overestimate for the number of bytes {@code
          * len} bytes could encode to.
          */
+        @Override
         public int maxOutputSize(int len) {
             return len * 8/5 + 10;
         }

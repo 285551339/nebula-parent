@@ -15,8 +15,10 @@ import java.net.UnknownHostException;
 @Slf4j
 public class IdUtil extends cn.hutool.core.util.IdUtil {
 
-    private static final int maxWorkerId = 31;
-    private static final Snowflake snowflake;
+    private static final int MAX_WORKER_ID = 31;
+    private static final Snowflake SNOW_FLAKE;
+    private static final int IP4_LENGTH = 4;
+    private static final int  IP6_LENGTH = 6;
 
     static {
         long workerId = 0L;
@@ -28,12 +30,12 @@ public class IdUtil extends cn.hutool.core.util.IdUtil {
         }
         byte[] ipAddressByteArray = address.getAddress();
         // IPV4
-        if (ipAddressByteArray.length == 4) {
+        if (ipAddressByteArray.length == IP4_LENGTH) {
             for (byte byteNum : ipAddressByteArray) {
                 workerId += byteNum & 0xFF;
             }
             // IPV6
-        } else if (ipAddressByteArray.length == 16) {
+        } else if (ipAddressByteArray.length == IP6_LENGTH) {
             for (byte byteNum : ipAddressByteArray) {
                 workerId += byteNum & 0B111111;
             }
@@ -41,10 +43,10 @@ public class IdUtil extends cn.hutool.core.util.IdUtil {
             throw new IllegalStateException("Bad LocalHost InetAddress, please check your network!");
         }
         //取余（不严谨，如果取余结果相同，可能造成ID冲突）
-        workerId = workerId % maxWorkerId;
+        workerId = workerId % MAX_WORKER_ID;
         log.info("本机生成workerId：{}，分布式部署时请检查多节点workerId值是否相同！", workerId);
         //支持同一个服务部署在31个数据中心，一个数据中心部署31个实例
-        snowflake = IdUtil.getSnowflake(workerId, 1);
+        SNOW_FLAKE = IdUtil.getSnowflake(workerId, 1);
     }
 
     /**
@@ -52,7 +54,7 @@ public class IdUtil extends cn.hutool.core.util.IdUtil {
      * @return
      */
     public static long nextId() {
-        return snowflake.nextId();
+        return SNOW_FLAKE.nextId();
     }
 
 }
