@@ -2,11 +2,13 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 10.0.2.50:8848
+        server-addr: 127.0.0.1:8848
         group: XY_A_GROUP
+        namespace: 945c7241-aab2-40fd-bc4c-a693ebd60265
       config:
-        server-addr: 10.0.2.50:8848
+        server-addr: 127.0.0.1:8848
         group: XY_A_GROUP
+        namespace: 945c7241-aab2-40fd-bc4c-a693ebd60265
 #    sentinel:
 #      transport:
 #        dashboard: localhost:8080
@@ -17,9 +19,9 @@ spring:
 #          response-status: 200
 #          response-body: '{"code": "90010","msg": "The system is busy, please try again later!"}'
   redis:
-    host: 10.0.8.17
+    host: 8.142.110.37
     port: 6379
-    password: sdxnetcafe
+    password: zangliulu
     database: 0
     timeout: 3000
     cache:
@@ -57,7 +59,7 @@ gateway:
 
 logging:
   level:
-    root: INFO
+    root: DEBUG
     com.xy.nebulaol: DEBUG
   logback:
     path: ./logs

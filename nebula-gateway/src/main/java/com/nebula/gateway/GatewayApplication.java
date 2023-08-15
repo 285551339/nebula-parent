@@ -12,7 +12,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @date 2021/6/24 13:43
  */
 @EnableDiscoveryClient
-@SpringBootApplication(scanBasePackages = {"com.xy.nebula.gateway", "com.nebula.redis"})
+@SpringBootApplication(scanBasePackages = {"com.nebula.gateway", "com.nebula.redis"})
 public class GatewayApplication {
     public static void main(String[] args) {
         SpringApplication.run(GatewayApplication.class);
